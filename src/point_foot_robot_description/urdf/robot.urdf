@@ -1,0 +1,544 @@
+<?xml version="1.0" ?>
+<robot name="point_foot">
+  <material name="black">
+    <color rgba="0.0 0.0 0.0 1.0"/>
+  </material>
+  <material name="blue">
+    <color rgba="0.0 0.0 0.8 1.0"/>
+  </material>
+  <material name="green">
+    <color rgba="0.0 0.8 0.0 1.0"/>
+  </material>
+  <material name="grey">
+    <color rgba="0.2 0.2 0.2 1.0"/>
+  </material>
+  <material name="silver">
+    <color rgba="0.9137254901960784 0.9137254901960784 0.8470588235294118 1.0"/>
+  </material>
+  <material name="orange">
+    <color rgba="1.0 0.4235294117647059 0.0392156862745098 1.0"/>
+  </material>
+  <material name="brown">
+    <color rgba="0.8705882352941177 0.8117647058823529 0.7647058823529411 1.0"/>
+  </material>
+  <material name="red">
+    <color rgba="0.8 0.0 0.0 1.0"/>
+  </material>
+  <material name="white">
+    <color rgba="1.0 1.0 1.0 1.0"/>
+  </material>
+  <!-- ros_control plugin -->
+  <gazebo>
+    <plugin filename="libpointfoot_hw_sim.so" name="gazebo_ros_control">
+      <robotNamespace>/</robotNamespace>
+      <robotParam>point_foot_robot_description</robotParam>
+      <robotSimType>pointfoot_gazebo/PointFootHWSim</robotSimType>
+    </plugin>
+  </gazebo>
+  <gazebo>
+    <plugin filename="libgazebo_ros_p3d.so" name="p3d_base_controller">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>1000.0</updateRate>
+      <bodyName>base</bodyName>
+      <topicName>Odometry</topicName>
+      <gaussianNoise>0</gaussianNoise>
+      <frameName>world</frameName>
+      <xyzOffsets>0 0 0</xyzOffsets>
+      <rpyOffsets>0 0 0</rpyOffsets>
+    </plugin>
+  </gazebo>
+  <gazebo reference="base">
+    <maxVel>100.</maxVel>
+    <self_collide>1</self_collide>
+    <kp>10000.</kp>
+    <kd>0.</kd>
+  </gazebo>
+<gazebo reference="stick_link">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <material>Gazebo/White</material>
+  </gazebo>
+  <!-- LF leg -->
+  <gazebo reference="abad_L">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <self_collide>1</self_collide>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="hip_L">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <self_collide>1</self_collide>
+    <material>Gazebo/DarkGrey</material>
+    <kp value="1000000.0"/>
+    <kd value="1.0"/>
+  </gazebo>
+  <gazebo reference="knee_L">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <self_collide>1</self_collide>
+  </gazebo>
+  <gazebo reference="foot_L">
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
+    <self_collide>1</self_collide>
+    <material>Gazebo/White</material>
+    <kp value="1000000.0"/>
+    <kd value="1.0"/>
+  </gazebo>
+  <!-- RF leg -->
+  <gazebo reference="abad_R">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <self_collide>1</self_collide>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="hip_R">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <self_collide>1</self_collide>
+    <material>Gazebo/DarkGrey</material>
+    <kp value="1000000.0"/>
+    <kd value="1.0"/>
+  </gazebo>
+  <gazebo reference="knee_R">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <self_collide>1</self_collide>
+  </gazebo>
+  <gazebo reference="foot_R">
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
+    <self_collide>1</self_collide>
+    <material>Gazebo/White</material>
+    <kp value="1000000.0"/>
+    <kd value="1.0"/>
+  </gazebo>
+
+  <!-- Used for fixing robot to Gazebo 'base_link' -->
+<!-- <link name="world"/>
+<joint name="fixed" type="fixed">
+  <origin rpy="0 0 0" xyz="0.0 0.0 -0.8"/>
+  <parent link="world"/>
+  <child link="base"/>
+</joint> -->
+  
+  <link name="base">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://point_foot_robot_description/meshes/base_Link.STL"/>
+      </geometry>
+      <material name="">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh
+          filename="package://point_foot_robot_description/meshes/base_Link.STL"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.02117014 0.00034639 0.00300161"/>
+      <mass value="5.65937068"/>
+      <inertia ixx="0.07000931" ixy="0.00043103" ixz="0.01804734" 
+               iyy="0.05662892" iyz="-0.00001883" izz="0.06306006"/>
+    </inertial>
+  </link>
+  <!-- Imu is fixed to the base link -->
+  <joint name="limx_imu_joint" type="fixed">
+    <origin rpy="0. 0. 0." xyz="0 0 0"/>
+    <parent link="base"/>
+    <child link="limx_imu"/>
+  </joint>
+  <!-- Imu link -->
+  <link name="limx_imu">
+    <inertial>
+      <mass value="0.01"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.015 0.015 0.004"/>
+      </geometry>
+    </visual>
+    <material name="orange">
+      <color rgba="255 108 10 255"/>
+    </material>
+  </link>
+  <gazebo reference="limx_imu">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+  <gazebo reference="limx_imu_joint">
+    <disableFixedJointLumping>true</disableFixedJointLumping>
+  </gazebo>
+
+  <joint name="support_joint1" type="fixed">
+       <origin rpy="0. 0. 0." xyz="0.2 0.15 -0.45"/>
+       <parent link="base"/>
+       <child link="support1"/>
+   </joint>
+   <link name="support1">
+       <collision>
+           <origin rpy="0 0 0" xyz="0 0 0"/>
+           <geometry>
+               <box size="0.015 0.015 0.004"/>
+           </geometry>
+       </collision>
+   </link>
+   <joint name="support_joint2" type="fixed">
+       <origin rpy="0. 0. 0." xyz="-0.3 0.15 -0.45"/>
+       <parent link="base"/>
+       <child link="support2"/>
+   </joint>
+   <link name="support2">
+       <collision>
+           <origin rpy="0 0 0" xyz="0 0 0"/>
+           <geometry>
+               <box size="0.015 0.015 0.004"/>
+           </geometry>
+       </collision>
+   </link>
+   <joint name="support_joint3" type="fixed">
+       <origin rpy="0. 0. 0." xyz="0.2 -0.15 -0.45"/>
+       <parent link="base"/>
+       <child link="support3"/>
+   </joint>
+   <link name="support3">
+       <collision>
+           <origin rpy="0 0 0" xyz="0 0 0"/>
+           <geometry>
+               <box size="0.015 0.015 0.004"/>
+           </geometry>
+       </collision>
+   </link>
+   <joint name="support_joint4" type="fixed">
+       <origin rpy="0. 0. 0." xyz="-0.3 -0.15 -0.45"/>
+       <parent link="base"/>
+       <child link="support4"/>
+   </joint>
+   <link name="support4">
+       <collision>
+           <origin rpy="0 0 0" xyz="0 0 0"/>
+           <geometry>
+               <box size="0.015 0.015 0.004"/>
+           </geometry>
+       </collision>
+   </link>
+
+  <joint name="abad_L_joint" type="revolute">
+    <origin rpy="0 0 0" xyz="0.0142 0.095 -0.08176"/>
+    <parent link="base"/>
+    <child link="abad_L"/>
+    <axis xyz="1 0 0"/>
+    <dynamics damping="0.05" friction="0.01"/>
+    <limit effort="80.0" lower="-0.785398163" upper="0.383972435" velocity="20.0"/>
+  </joint>
+  <link name="abad_L">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://point_foot_robot_description/meshes/abad_L_Link.STL"/>
+      </geometry>
+      <material name=""/>
+      <color rgba="0.79216 0.81961 0.93333 1"/>
+    </visual>
+    <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+            <mesh filename="package://point_foot_robot_description/meshes/abad_L_Link.STL" />
+        </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.07010163 0.04726369 0.00010664"/>
+      <mass value="1.03648983"/>
+      <inertia ixx="0.00133111" ixy="0.00040056" ixz="-0.00000811" 
+               iyy="0.00203159" iyz="0.00000230" izz="0.00178062" />
+    </inertial>
+  </link>
+  
+  <joint name="hip_L_joint" type="revolute">
+    <origin rpy="0 0 0" xyz="-0.0802 0.031 0"/>
+    <parent link="abad_L"/>
+    <child link="hip_L"/>
+    <axis xyz="0 -1 0"/>
+    <dynamics damping="0.05" friction="0.01"/>
+    <limit effort="80.0" lower="-1.518436449" upper="1.012290966" velocity="20.0"/>
+  </joint>
+  <link name="hip_L">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://point_foot_robot_description/meshes/hip_L_Link.STL" />
+      </geometry>
+      <material name=""/>
+      <color rgba="0.79216 0.81961 0.93333 1"/>
+    </visual>
+    <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+        <mesh filename="package://point_foot_robot_description/meshes/hip_L_Link.STL" />
+        </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.03047400 -0.05446455 -0.03920244"/>
+      <mass value="1.73405445"/>
+      <inertia ixx="0.01148168" ixy="0.00124007" ixz="-0.00625658" 
+               iyy="0.01576674" iyz="0.00159648" izz="0.00699881"/>
+    </inertial>
+  </link>
+
+  <joint name="knee_L_joint" type="revolute">
+    <origin rpy="0 0 0" xyz="-0.15 -0.031 -0.25981"/>
+    <parent link="hip_L"/>
+    <child link="knee_L"/>
+    <axis xyz="0 -1 0"/>
+    <dynamics damping="0.05" friction="0.01"/>
+    <limit effort="80" lower="-1.396263402" upper="0.872664626" velocity="20"/>
+  </joint>
+  <link name="knee_L">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://point_foot_robot_description/meshes/knee_L_Link.STL" />
+      </geometry>
+      <material name=""/>
+      <color rgba="0.79216 0.81961 0.93333 1"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://point_foot_robot_description/meshes/knee_L_Link.STL" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.05607029 -0.00007153 -0.08804698"/>
+      <mass value="0.25930748"/>
+      <inertia ixx="0.00222212" ixy="-0.00000163" ixz="0.00139314" 
+               iyy="0.00312233" iyz="0.00000239" izz="0.00093345"/>
+    </inertial>
+  </link>
+
+  <joint name="foot_L_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.15 0 -0.29066"/>
+    <parent link="knee_L"/>
+    <child link="foot_L"/>
+    <axis xyz="0 0 0"/>
+  </joint>
+  <link name="foot_L">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://point_foot_robot_description/meshes/foot_L_Link.STL"/>
+      </geometry>
+      <material name=""/>
+      <color rgba="0.79216 0.81961 0.93333 1"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://point_foot_robot_description/meshes/foot_L_Link.STL" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.00245810 0.00000000 0.03706242"/>
+      <mass value="0.14047647"/>
+      <inertia ixx="0.00007326" ixy="0.0" ixz="0.00000519" 
+               iyy="0.00007655" iyz="0.0" izz="0.00005623"/>
+    </inertial>
+  </link>
+ 
+  <gazebo reference="foot_L_joint">
+    <disableFixedJointLumping>true</disableFixedJointLumping>
+  </gazebo>
+  <transmission name="abad_L_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="abad_L_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="abad_L_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="hip_L_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="hip_L_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="hip_L_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="knee_L_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="knee_L_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="knee_L_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <joint name="abad_R_joint" type="revolute">
+    <origin rpy="0 0 0" xyz="0.0142 -0.095 -0.08176"/>
+    <parent link="base"/>
+    <child link="abad_R"/>
+    <axis xyz="-1 0 0"/>
+    <dynamics damping="0.05" friction="0.01"/>
+    <limit effort="80.0" lower="-0.785398163" upper="0.383972435" velocity="20.0"/>
+  </joint>
+  <link name="abad_R">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://point_foot_robot_description/meshes/abad_R_Link.STL"/>
+      </geometry>
+      <material name=""/>
+      <color rgba="0.79216 0.81961 0.93333 1"/>
+    </visual>
+    <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+            <mesh filename="package://point_foot_robot_description/meshes/abad_R_Link.STL" />
+        </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.07010283 -0.04726372 0.00010253"/>
+      <mass value="1.03648872"/>
+      <inertia ixx="0.00133125" ixy="-0.00040058" ixz="-0.00000791" 
+               iyy="0.00203161" iyz="-0.00000238" izz="0.00178049"/>
+    </inertial>
+  </link>
+
+  <joint name="hip_R_joint" type="revolute">
+    <origin rpy="0 0 0" xyz="-0.0802 -0.031 0"/>
+    <parent link="abad_R"/>
+    <child link="hip_R"/>
+    <axis xyz="0 -1 0"/>
+    <dynamics damping="0.05" friction="0.01"/>
+    <limit effort="80.0" lower="-1.518436449" upper="1.012290966" velocity="20.0"/>
+  </joint>
+  <link name="hip_R">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://point_foot_robot_description/meshes/hip_R_Link.STL" />
+      </geometry>
+      <material name=""/>
+      <color rgba="1 0.98039 0.6 1"/>
+    </visual>
+    <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+        <mesh filename="package://point_foot_robot_description/meshes/hip_R_Link.STL" />
+        </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.03047721 0.05446458 -0.03919637"/>
+      <mass value="1.73405240"/>
+      <inertia ixx="0.01148221" ixy="-0.00123983" ixz="-0.00625649" 
+               iyy="0.01576712" iyz="-0.00159690" izz="0.00699866"/>
+    </inertial>
+  </link>
+
+  <joint name="knee_R_joint" type="revolute">
+    <origin rpy="0 0 0" xyz="-0.15 0.031 -0.25981"/>
+    <parent link="hip_R"/>
+    <child link="knee_R"/>
+    <axis xyz="0 1 0"/>
+    <dynamics damping="0.05" friction="0.01"/>
+    <limit effort="80" lower="-1.396263402" upper="0.872664626" velocity="50"/>
+  </joint>
+  <link name="knee_R">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://point_foot_robot_description/meshes/knee_R_Link.STL" />
+      </geometry>
+      <material name=""/>
+      <color rgba="0.79216 0.81961 0.93333 1"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://point_foot_robot_description/meshes/knee_R_Link.STL" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.05607065 0.00007138 -0.08804757"/>
+      <mass value="0.25930895"/>
+      <inertia ixx="0.00222213" ixy="0.00000163" ixz="0.00139315" 
+               iyy="0.00312235" iyz="-0.00000239" izz="0.00093346"/>
+    </inertial>
+  </link>
+
+  <joint name="foot_R_joint" type="fixed"> 
+    <origin rpy="0 0 0" xyz="0.15 0 -0.29066"/>
+    <parent link="knee_R"/>
+    <child link="foot_R"/>
+    <axis xyz="0 0 0"/>
+  </joint>
+  <link name="foot_R">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://point_foot_robot_description/meshes/foot_R_Link.STL"/>
+      </geometry>
+      <material name=""/>
+      <color rgba="0.79216 0.81961 0.93333 1"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://point_foot_robot_description/meshes/foot_R_Link.STL" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.00245810 0.00000000 0.03706242"/>
+      <mass value="0.14047647"/>
+      <inertia ixx="0.00007326" ixy="0.0" ixz="0.00000519" 
+               iyy="0.00007655" iyz="0.0" izz="0.00005623"/>
+    </inertial>
+  </link>
+ 
+  <gazebo reference="foot_R_joint">
+    <disableFixedJointLumping>true</disableFixedJointLumping>
+  </gazebo>
+  <transmission name="abad_R_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="abad_R_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="abad_R_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="hip_R_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="hip_R_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="hip_R_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="knee_R_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="knee_R_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="knee_R_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+</robot>
