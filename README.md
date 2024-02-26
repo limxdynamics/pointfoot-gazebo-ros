@@ -64,5 +64,5 @@ catkin_make install
   ```
   limx@limx:~/limxsdk-for-lowlevel/build$ ./examples/pointfoot_example
   ```
-  
-  
+- 运行效果如下：
+  <video src="doc/simulator.mkv"></video>
