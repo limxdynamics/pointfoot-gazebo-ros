@@ -18,7 +18,7 @@
 #include <hardware_interface/ContactSensorInterface.h>
 #include <hardware_interface/HybridJointInterface.h>
 #include <realtime_tools/realtime_buffer.h>
-#include "limxsdk/simulator/pointfoot_sim.h"
+#include "limxsdk/pointfoot_sim.h"
 
 namespace pointfoot_gazebo
 {

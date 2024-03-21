@@ -39,7 +39,7 @@ catkin_make install
 
 ## 3、运行
 
-- 运行`pointfoot-gazebo-ros`仿真的同时，还需要运行一个基于`limxsdk-for-lowlevel`实现的运动控制算法程序。仿真运行流程如下图所示。
+- 运行`pointfoot-gazebo-ros`仿真的同时，还需要运行一个基于 [limxsdk-for-lowlevel](https://github.com/limxdynamics/limxsdk-for-lowlevel) 实现的运动控制算法程序。仿真运行流程如下图所示。
 
 ![](doc/img.png)
 
