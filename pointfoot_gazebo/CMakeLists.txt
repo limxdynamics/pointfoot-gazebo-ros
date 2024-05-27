@@ -74,6 +74,6 @@ install(FILES pointfoot_hw_sim_plugins.xml
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
         )
 
-install(DIRECTORY config launch
+install(DIRECTORY config launch worlds
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
         )
