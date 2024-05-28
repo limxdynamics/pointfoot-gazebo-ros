@@ -56,8 +56,6 @@ if(DEFINED ENV{ROS_DISTRO})
 
     find_package(ament_cmake REQUIRED)
 
-    ament_export_include_directories(include)
-
     if (${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
       set(LIB_PATH ${PROJECT_SOURCE_DIR}/lib/aarch64)
     elseif (${CMAKE_SYSTEM_PROCESSOR} MATCHES "x86_64")
@@ -74,6 +72,12 @@ if(DEFINED ENV{ROS_DISTRO})
     
     # Install library files to build output
     install(DIRECTORY ${LIB_PATH}/. DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
+
+    # Export the library
+    ament_export_libraries(pointfoot_sdk_sim)
+
+    # Export the include
+    ament_export_include_directories(include)
 
     ament_package()
   endif()
