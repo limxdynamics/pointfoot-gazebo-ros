@@ -78,7 +78,7 @@ sudo apt install ros-noetic-urdf \
 
   ```
   source install/setup.bash
-  rosrun limx_robot_sdk pf_groupJoints_move
+  rosrun pointfoot_sdk_lowlevel pf_groupJoints_move
   ```
 
   
