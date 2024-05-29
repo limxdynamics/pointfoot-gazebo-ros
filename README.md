@@ -80,5 +80,6 @@ sudo apt install ros-noetic-urdf \
   source install/setup.bash
   rosrun pointfoot_sdk_lowlevel pf_groupJoints_move
   ```
+  ![](doc/simulator.gif)
 
   
