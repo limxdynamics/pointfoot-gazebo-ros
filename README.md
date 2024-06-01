@@ -81,5 +81,3 @@ sudo apt install ros-noetic-urdf \
   rosrun pointfoot_sdk_lowlevel pf_groupJoints_move
   ```
   ![](doc/simulator.gif)
-
-  
