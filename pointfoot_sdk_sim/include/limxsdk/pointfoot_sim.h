@@ -85,6 +85,6 @@ namespace limxsdk {
        */
       PointFootSim();
   };
-};
+}
 
 #endif
