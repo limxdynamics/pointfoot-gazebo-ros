@@ -31,6 +31,7 @@ catkin_package(
 ## Build ##
 ###########
 
+link_directories(${CMAKE_INSTALL_PREFIX}/lib)
 link_directories(${CATKIN_DEVEL_PREFIX}/lib)
 
 include_directories(
