@@ -393,6 +393,14 @@ namespace pointfoot_gazebo
         {
             joint_index = 2;
         }
+        else if (jointName.find("wheel") != std::string::npos)
+        {
+            joint_index = 3;
+        }
+        else if (jointName.find("ankle") != std::string::npos)
+        {
+            joint_index = 3;
+        }
         else
         {
             return -1;
