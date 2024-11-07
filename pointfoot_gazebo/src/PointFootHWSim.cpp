@@ -10,6 +10,7 @@
 #include <gazebo_ros_control/gazebo_ros_control_plugin.h>
 
 static limxsdk::PointFootSim *pf;
+static int motor_number;
 
 namespace pointfoot_gazebo
 {
@@ -20,8 +21,10 @@ namespace pointfoot_gazebo
         pf = limxsdk::PointFootSim::getInstance();
         pf->init("127.0.0.1");
 
+        motor_number = pf->getMotorNumber();
+
         // Write the number of motors in the robotCmdBuffer_
-        robotCmdBuffer_.writeFromNonRT(limxsdk::RobotCmd(pf->getMotorNumber()));
+        robotCmdBuffer_.writeFromNonRT(limxsdk::RobotCmd(motor_number));
 
         // Subscribe to robot command messages and write them to robotCmdBuffer_
         pf->subscribeRobotCmdForSim([this](const limxsdk::RobotCmdConstPtr& msg) 
@@ -147,7 +150,7 @@ namespace pointfoot_gazebo
         }
 
         // Publish robot state for simulation
-        if (joint_names_.size() == pf->getMotorNumber()) 
+        if (joint_names_.size() == motor_number) 
         {
             limxsdk::RobotState state;
 
@@ -193,7 +196,7 @@ namespace pointfoot_gazebo
         }
         else
         {
-            ROS_ERROR("joint_names size(%ld) != RobotMotorNumber(%u)", joint_names_.size(), pf->getMotorNumber());
+            ROS_ERROR("joint_names size(%ld) != RobotMotorNumber(%u)", joint_names_.size(), motor_number);
         }
 
         // Set cmd to zero to avoid crazy soft limit oscillation when not controller loaded
@@ -366,7 +369,6 @@ namespace pointfoot_gazebo
     int PointFootHWSim::parseJointIndex(const std::string& jointName) {
         int leg_index = 0;
         int joint_index = 0;
-
        
         if (jointName.find("L") != std::string::npos)
         {
@@ -406,7 +408,7 @@ namespace pointfoot_gazebo
             return -1;
         }
 
-        return (leg_index * 3 + joint_index);
+        return (leg_index * motor_number / 2 + joint_index);
     }
 
 } // namespace pointfoot_gazebo
