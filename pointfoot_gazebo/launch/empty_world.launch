@@ -16,6 +16,6 @@
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" clear_params="true"
           args="-param robot_description
           -urdf
-          -z 0.62
+          -z 0.82
           -model point_foot_robot" output="screen"/>
 </launch>
