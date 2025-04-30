@@ -20,6 +20,8 @@ sudo apt install ros-noetic-urdf \
                  ros-noetic-control-msgs \
                  ros-noetic-ros-control \
                  ros-noetic-gazebo-* \
+                 ros-noetic-robot-state-* \
+                 ros-noetic-joint-state-* \
                  ros-noetic-rqt-gui \
                  ros-noetic-rqt-controller-manager \
                  ros-noetic-plotjuggler* \
