@@ -18,4 +18,20 @@
           -urdf
           -z 0.82
           -model point_foot_robot" output="screen"/>
+
+    <!-- Configure the joint state controller parameters in the ROS parameter server -->
+    <rosparam>
+        joint_state_controller:
+            type: joint_state_controller/JointStateController
+            publish_rate: 100
+    </rosparam>
+
+    <!-- Start the controller spawner to launch the joint state controller -->
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" args="joint_state_controller"/>
+
+    <!-- Start the robot state publisher to publish the robot's state information -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+    <!-- Start the joint state publisher to publish the robot's joint state information -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
 </launch>
