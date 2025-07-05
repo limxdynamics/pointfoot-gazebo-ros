@@ -1,7 +1,5 @@
 # pointfoot-gazebo-ros
 
-
-
 ## 1. 搭建开发环境
 
 我们推荐在 Ubuntu 20.04 操作系统上建立基于 ROS Noetic 的算法开发环境。ROS 提供了一系列工具和库，如核心库、通信库和仿真工具（如 Gazebo），极大地便利了机器人算法的开发、测试和部署。这些资源为用户提供了一个丰富而完整的算法开发环境。
@@ -45,7 +43,7 @@ sudo apt install ros-noetic-urdf \
 
   ```
   cd ~/limx_ws/src
-  git clone https://github.com/limxdynamics/pointfoot-sdk-lowlevel.git
+  git clone https://github.com/limxdynamics/limxsdk-lowlevel.git
   ```
 
 - 下载 Gazebo 仿真器：
@@ -101,6 +99,7 @@ sudo apt install ros-noetic-urdf \
 
   ```
   source install/setup.bash
-  rosrun pointfoot_sdk_lowlevel pf_groupJoints_move
+  rosrun limxsdk_lowlevel pf_groupJoints_move
   ```
+
   ![](doc/simulator.gif)

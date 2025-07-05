@@ -11,7 +11,7 @@ find_package(catkin REQUIRED
         gazebo_ros_control
         hardware_interface
         realtime_tools
-        pointfoot_sdk_sim
+        limxsdk_sim
         )
 
 catkin_package(
@@ -23,7 +23,7 @@ catkin_package(
         gazebo_ros_control
         hardware_interface
         realtime_tools
-        pointfoot_sdk_sim
+        limxsdk_sim
         DEPENDS
 )
 
@@ -52,7 +52,7 @@ add_dependencies(pointfoot_hw_sim
 target_link_libraries(pointfoot_hw_sim
         ${catkin_LIBRARIES}
         ${GAZEBO_LIBRARIES}
-        pointfoot_sdk_sim
+        limxsdk_sim
         )
 
 

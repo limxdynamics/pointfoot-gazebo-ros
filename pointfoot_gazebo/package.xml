@@ -12,7 +12,7 @@
     <depend>gazebo_ros_control</depend>
     <depend>hardware_interface</depend>
     <depend>realtime_tools</depend>
-    <depend>pointfoot_sdk_sim</depend>
+    <depend>limxsdk_sim</depend>
     <export>
         <gazebo_ros_control plugin="${prefix}/pointfoot_hw_sim_plugins.xml"/>
         <gazebo_ros gazebo_model_path="${prefix}/.."/>
