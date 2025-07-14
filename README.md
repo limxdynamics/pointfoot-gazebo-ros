@@ -1,4 +1,4 @@
-# [简体中文](README_cn.md) | English
+# [中文](README_cn.md) | English
 # pointfoot-gazebo-ros
 ## 1. Set up the Development Environment 
 
