@@ -1,5 +1,5 @@
 # [English](README.md) | 中文
-# pointfoot-gazebo-ros
+# tron1-gazebo-ros
 
 ## 1. 搭建开发环境
 
@@ -51,7 +51,7 @@ sudo apt install ros-noetic-urdf \
 
   ```
   cd ~/limx_ws/src
-  git clone https://github.com/limxdynamics/pointfoot-gazebo-ros.git
+  git clone https://github.com/limxdynamics/tron1-gazebo-ros.git
   ```
 
 - 下载机器人模型描述文件

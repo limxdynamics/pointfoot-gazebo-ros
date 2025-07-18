@@ -1,5 +1,5 @@
 # [中文](README_cn.md) | English
-# pointfoot-gazebo-ros
+# tron1-gazebo-ros
 ## 1. Set up the Development Environment 
 
 Install ROS Noetic: Set up a ROS Noetic-based algorithm Development Environment on the Ubuntu 20.04 operating system. For installation, please refer to the documentation: https://wiki.ros.org/noetic/Installation/Ubuntu , and choose "ros-noetic-desktop" for installation. After the installation of ROS Noetic is completed, enter the following Shell commands in the Bash end point to install the libraries required by the Development Environment:
@@ -45,7 +45,7 @@ You can create an algorithm development workspace by following these steps:
 
   ```
   cd ~/limx_ws/src
-  git clone https://github.com/limxdynamics/pointfoot-gazebo-ros.git
+  git clone https://github.com/limxdynamics/tron1-gazebo-ros.git
   ```
 
 - Download the robot model description file
